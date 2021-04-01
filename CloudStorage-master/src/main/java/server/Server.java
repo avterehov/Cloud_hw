@@ -5,14 +5,16 @@ import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-// TODO: 02.03.2021
-// notify about connect / disconnect
 
 public class Server {
 	public Server() {
 		ExecutorService service = Executors.newFixedThreadPool(4);
+
 		try (ServerSocket server = new ServerSocket(1235)){
 			System.out.println("Server started");
+			AuthService.connect();
+			System.out.println("Data base connected");
+
 			while (true) {
 				service.execute(new ClientHandler(server.accept()));
 			}
